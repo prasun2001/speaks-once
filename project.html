@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#116466">
+  <title>Ek Baar Bolo | ASHA Sahayak</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand-icon">EB</div>
+    <div>
+      <h1>Ek Baar Bolo</h1>
+      <p>Speak Once, Fill Every Form</p>
+    </div>
+    <span class="offline-tag">Local-first</span>
+  </header>
+
+  <main class="container">
+    <section class="welcome card">
+      <p class="eyebrow">SAHAYAK & SAMMAN BHARAT</p>
+      <h2>Kam typing, zyada samay seva ke liye.</h2>
+      <p>Ek baar notes likho ya bolkar transcript banao.
+        Details check karo, phir records aur register taiyar karo.</p>
+    </section>
+
+    <section class="card">
+      <div class="section-heading">
+        <span class="step">1</span>
+        <div>
+          <h2>Voice note / transcript</h2>
+          <p>Hindi ya English mein baat karo.</p>
+        </div>
+      </div>
+
+      <div class="button-row">
+        <button id="startVoice" class="btn primary">🎙 Start speaking</button>
+        <button id="stopVoice" class="btn secondary" disabled>Stop</button>
+        <button id="startRecording" class="btn secondary">● Record audio</button>
+        <button id="stopRecording" class="btn secondary" disabled>Stop recording</button>
+      </div>
+
+      <p id="voiceStatus" class="status" role="status">
+        Ready. Speech recognition browser par depend karti hai.
+      </p>
+
+      <audio id="audioPlayer" controls hidden></audio>
+
+      <label for="transcript">Transcript / visit notes</label>
+      <textarea id="transcript" rows="5"
+        placeholder="Example: Beneficiary name Sita Devi, age 26, village Rampur. Visit date 28 October 2026. Follow-up required next week."></textarea>
+
+      <p class="hint">Audio recording aur speech-to-text alag features hain.
+        Record kiya audio apne aap text mein convert nahi hota.</p>
+
+      <button id="extractBtn" class="btn primary full">
+        Extract details
+      </button>
+    </section>
+
+    <section class="card">
+      <div class="section-heading">
+        <span class="step">2</span>
+        <div>
+          <h2>Review details</h2>
+          <p>Save karne se pehle har field verify karo.</p>
+        </div>
+      </div>
+
+      <div class="form-grid">
+        <div>
+          <label for="worker">ASHA worker name</label>
+          <input id="worker" placeholder="Worker name">
+        </div>
+        <div>
+          <label for="beneficiary">Beneficiary name</label>
+          <input id="beneficiary" placeholder="Beneficiary name">
+        </div>
+        <div>
+          <label for="age">Age</label>
+          <input id="age" type="number" min="0" max="120" placeholder="Age">
+        </div>
+        <div>
+          <label for="village">Village / area</label>
+          <input id="village" placeholder="Village or area">
+        </div>
+        <div>
+          <label for="visitDate">Visit date</label>
+          <input id="visitDate" type="date">
+        </div>
+        <div>
+          <label for="followUp">Follow-up date (optional)</label>
+          <input id="followUp" type="date">
+        </div>
+      </div>
+
+      <label for="notes">Visit notes</label>
+      <textarea id="notes" rows="3"
+        placeholder="Visit ka short summary"></textarea>
+
+      <div class="notice">
+        <strong>Privacy:</strong> Ye sample data browser ke local storage
+        mein save hota hai. Shared device par real beneficiary details mat
+        daalo. Sensitive health records ke liye approved, secure system use karo.
+      </div>
+
+      <button id="saveBtn" class="btn primary full">Save record on this device</button>
+      <p id="saveStatus" class="status" role="status"></p>
+    </section>
+
+    <section class="card">
+      <div class="section-heading">
+        <span class="step">3</span>
+        <div>
+          <h2>Two app formats</h2>
+          <p>Sample schemas hain, official government integrations nahi.</p>
+        </div>
+      </div>
+
+      <label for="schemaA">Format A: configurable JSON field mapping</label>
+      <textarea id="schemaA" rows="4">{
+  "worker": "asha_worker",
+  "beneficiary": "beneficiary_name",
+  "age": "age",
+  "village": "village",
+  "visitDate": "visit_date",
+  "followUp": "follow_up_date",
+  "notes": "visit_notes"
+}</textarea>
+
+      <label for="schemaB">Format B: configurable JSON field mapping</label>
+      <textarea id="schemaB" rows="4">{
+  "worker": "worker_name",
+  "beneficiary": "person_name",
+  "age": "person_age",
+  "village": "location",
+  "visitDate": "date_of_visit",
+  "followUp": "next_visit",
+  "notes": "remarks"
+}</textarea>
+
+      <div class="button-row">
+        <button id="formatABtn" class="btn secondary">Generate A</button>
+        <button id="formatBBtn" class="btn secondary">Generate B</button>
+      </div>
+      <label for="jsonOutput">Generated JSON</label>
+      <textarea id="jsonOutput" rows="8" readonly
+        placeholder="Generated data yahan dikhega"></textarea>
+
+      <div class="button-row">
+        <button id="downloadJson" class="btn secondary">Download JSON</button>
+        <button id="printBtn" class="btn primary">Print register</button>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="section-heading">
+        <span class="step">4</span>
+        <div>
+          <h2>Saved records</h2>
+          <p>Is browser mein locally saved entries.</p>
+        </div>
+      </div>
+
+      <div class="button-row">
+        <button id="exportAll" class="btn secondary">Export all records</button>
+        <button id="clearRecords" class="btn danger">Delete all records</button>
+      </div>
+      <div id="recordsList" class="records-list"></div>
+    </section>
+  </main>
+
+  <footer>
+    <p>Ek Baar Bolo · Prototype for human-reviewed record keeping</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
